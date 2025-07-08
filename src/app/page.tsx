@@ -17,10 +17,10 @@ export default function Home() {
   const [formulario, setFormulario] = useState(initialStateFormulario)
   const [formularioA, setFormularioA] = useState(initialStateFormulario)
   const [formularios, setformularios] = useState<Formulario[]>([])
-  const [eNombre, setENombre] = useState("")
+  const [editando, setEditando] = useState(false);
 
     useEffect(()=>{
-    let listadoStr = miStorage.getItem("formularios")
+    let listadoStr = miStorage.getItem("formulario")
     if(listadoStr != null){
       let listado = JSON.parse(listadoStr)
       setformularios(listado)
@@ -35,9 +35,22 @@ export default function Home() {
       { ...formulario, [name] : value  }
     )
   }
+  const handleFormularioA = (name: string, value: string) => {
+  setFormularioA(prev => ({
+    ...prev,
+    [name]: name === "rut" ? Number(value) : value
+  }));
+};
+    const handleActualizar = ()=>{
+    alert("Falta esto")
+  }
+  const traerformulario = (f:Formulario)=>{
+    setFormularioA({...f})
+    setEditando(true)
+  }
   return (
     <>
-    <form>
+    <form className="border w-[70%] mx-auto">
       <h1>Nombre {formulario.nombre} Rut {formulario.rut} descripcion {formulario.descripcion} Fecha{formulario.fecha} Sexo {formulario.opcion} </h1>
       <label>Nombre</label><br />
       <input
@@ -79,6 +92,7 @@ export default function Home() {
 
       <button
       onClick={(e)=>{handleRegistrar()}}>Registrar</button>
+  <MostrarDatos vista="hola" traerformulario={traerformulario}/>
 
 
   </form>
