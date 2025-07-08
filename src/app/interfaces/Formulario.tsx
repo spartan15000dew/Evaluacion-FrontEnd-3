@@ -1,6 +1,6 @@
 export interface Formulario{
-    Nombre : string,
-    Rut : number,
+    nombre : string,
+    rut : 0,
     opcion : string,
     descripcion : string,
     fecha : string
