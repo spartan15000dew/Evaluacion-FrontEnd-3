@@ -1,7 +1,8 @@
 'use client'
 import Image from "next/image";
 import { Formulario } from "./interfaces/Formulario";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { json } from "stream/consumers";
 
 
 const  initialStateFormulario:Formulario = {
@@ -18,6 +19,17 @@ export default function Home() {
   const [formularios, setformularios] = useState<Formulario[]>([])
   const [eNombre, setENombre] = useState("")
 
+    useEffect(()=>{
+    let listadoStr = miStorage.getItem("formularios")
+    if(listadoStr != null){
+      let listado = JSON.parse(listadoStr)
+      setformularios(listado)
+    }
+  },[]) 
+
+  const handleRegistrar = ()=> {
+    miStorage.setItem("formulario",JSON.stringify([...formularios,formulario]))
+  }
   const handleFormulario = (name:string,value:string)=>{
     setFormulario(
       { ...formulario, [name] : value  }
@@ -63,9 +75,10 @@ export default function Home() {
             <option value="Hombre">Hombre</option>
             <option value="Mujer">Mujer</option>
             <option value="Otro">Otro</option>
-          </select>
+          </select><br />
 
-
+      <button
+      onClick={(e)=>{handleRegistrar()}}>Registrar</button>
 
 
   </form>
