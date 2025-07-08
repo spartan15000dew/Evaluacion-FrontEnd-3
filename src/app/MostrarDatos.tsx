@@ -19,6 +19,10 @@ export const MostrarDatos = ({ eventos, setEventos, formulario, setFormulario } 
         }
   },[])
 
+  function eliminarDeLaLista(eventoId: number) {
+    setEventos(prevEventos =>
+      prevEventos.filter(evento => evento.id !== eventoId)
+    )
 
   }
   

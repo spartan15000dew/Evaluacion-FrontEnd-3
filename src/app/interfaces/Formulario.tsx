@@ -4,4 +4,5 @@ export interface Formulario{
     opcion : string,
     descripcion : string,
     fecha : string,
+    id: number
 }

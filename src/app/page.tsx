@@ -11,21 +11,27 @@ const  initialStateFormulario:Formulario = {
   rut : 0,
   opcion : "",
   descripcion : "",
-  fecha : ""
+  fecha : "",
+  id: 0
 }
 
 
 export default function Home() {
   const miStorage = window.localStorage
   const [formulario, setFormulario] = useState(initialStateFormulario)
-  const [formularioA, setFormularioA] = useState(initialStateFormulario)
-  const [formularios, setformularios] = useState<Formulario[]>([])
-  const [editando, setEditando] = useState(false);
-
+  const [eventos, setEventos] = useState<Formulario[]>([])
+  
   useEffect(()=>{
     let listado = JSON.parse(miStorage.getItem("formulario") || "[]")
-    setformularios(listado)
-  },[]) 
+    setEventos(listado);
+    if (!miStorage.getItem("contador")) {
+      miStorage.setItem("contador", "0");
+    }
+  },[])
+
+  useEffect(() => {
+    localStorage.setItem("formulario", JSON.stringify(eventos))
+  }, [eventos])
 
   const handleFormularioCambio = (name:string, value:string) => {
     setFormulario(
@@ -35,17 +41,19 @@ export default function Home() {
 
   const handleRegistrar = (e: FormEvent)=> {
     e.preventDefault();
-    const listadoDeRegistros = JSON.parse(localStorage.getItem("formulario") || "[]")
-    miStorage.setItem("formulario",JSON.stringify([...formularios,formulario]))
+    const contador = parseInt(miStorage.getItem("contador") || "0");
+    const nuevoEvento = { ...formulario, id: contador };
+    miStorage.setItem("contador", (contador + 1).toString());
+    const nuevosRegistros = [...eventos, nuevoEvento];
+
+    setEventos(nuevosRegistros)
+    localStorage.setItem("formulario", JSON.stringify(nuevosRegistros))
   }
 
   const handleActualizar = ()=>{
     alert("Falta esto")
   }
-  const traerformulario = (f:Formulario)=>{
-    setFormularioA({...f})
-    setEditando(true)
-  }
+
   return (
     <>
     <form className="border w-[70%] mx-auto"
@@ -89,22 +97,7 @@ export default function Home() {
 
       <button type="submit">Registrar</button>
     </form>
-  <MostrarDatos vista="hola" traerformulario={traerformulario}/>
-  <form >
-    <h1>{formulario.nombre}</h1>
-      <label>Nombre</label><br />
-      <input
-          name ="nombre"
-          type="text" 
-          placeholder="Nombre"
-          value={formularioA.nombre}
-          onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}/> <br />
-          <button 
-          onClick={()=>{handleActualizar()}}>Editar</button>  
-
-
-  </form>
-
+    <MostrarDatos eventos={eventos} setEventos={setEventos} formulario={formulario} setFormulario={setFormulario}/>
   </>
   );
 }
