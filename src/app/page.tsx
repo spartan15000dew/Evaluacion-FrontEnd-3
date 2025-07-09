@@ -21,9 +21,9 @@ export default function Home() {
   }, [eventos])
 
   return (
-    <>
+    <div className="flex flex-col gap-y-6">
     <EventForm eventos={eventos} setEventos={setEventos}/>
     <MostrarDatos eventos={eventos} setEventos={setEventos}/>
-    </>
+    </div>
   );
 }

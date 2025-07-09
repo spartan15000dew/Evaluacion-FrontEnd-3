@@ -29,7 +29,7 @@ export const MostrarDatos = ({ eventos, setEventos } : Props) => {
       <td><input type="number" value={evento.participantes} onChange={(e) => handleChange(evento.id, e)}/></td>
       <td><input type="text" value={evento.descripcion} onChange={(e) => handleChange(evento.id, e)}/></td>
       <td>
-        <select name="opcion" value={evento.tipo} onChange={(e) => handleChange(evento.id, e)}>
+        <select name="tipo" value={evento.tipo} onChange={(e) => handleChange(evento.id, e)}>
         <option value="conference" className="text-neutral-900">Conferencia</option>
         <option value="workshop" className="text-neutral-900">Taller</option>
         <option value="party" className="text-neutral-900">Fiesta</option>
@@ -37,21 +37,24 @@ export const MostrarDatos = ({ eventos, setEventos } : Props) => {
         </select>
       </td>
       <td><input type="date" value={evento.fecha} onChange={(e) => handleChange(evento.id, e)}/></td>
-      <td><button onClick={() => eliminarDeLaLista(evento.id)}>Borrar</button></td>
+      <td><button className="bg-red-500 rounded px-3 py-2"
+        onClick={() => eliminarDeLaLista(evento.id)}
+      >Borrar</button></td>
     </tr>
   )
   
   
   return (
     <>
-      <table>
+      <table className="w-[90%] mx-auto">
         <thead>
-          <tr>
+          <tr className="gap-x-4">
             <td>Nombre de evento</td>
             <td>Número de participantes</td>
             <td>Descripción del evento</td>
             <td>Tipo de evento</td>
             <td>Fecha del evento</td>
+            <td></td>
           </tr>
         </thead>
         <tbody>

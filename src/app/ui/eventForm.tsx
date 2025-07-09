@@ -39,34 +39,48 @@ export default function EventForm( {eventos, setEventos} : EventFormProps) {
     }
 
     return (
-        <form className="border w-[70%] mx-auto"
+        <div className="w-full">
+        <form className="
+                border rounded-md w-[30rem] mx-auto flex flex-col items-start 
+                px-7 py-5 gap-y-1
+            "
             onSubmit={handleRegistrar}
         >
-        <h1>Agendar evento</h1>
+        <h1 className="self-center">Agendar evento</h1>
         <label htmlFor="nombre-evento">Nombre del evento</label>
         <input
+            required
             id="nombre-evento"
             name ="nombre"
             type="text" 
             placeholder="ej. Taller de tejido"
-            onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}/>
-
+            className="border border-emerald-800"
+            onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}
+        />
         <label htmlFor="participantes-num">Número de participantes</label>
         <input
+            required
+            min={1}
+            max={20000}
+            className="border border-emerald-800"
             id="participantes-num"
             name ="participantes"
             type="number" 
             placeholder="ej. 50"
-            onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}/>
-
+            onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}
+        />
         <label htmlFor="descripcion-evento">Descripción</label>
-        <textarea name="descripcion" id="descripcion-evento" placeholder="Planificación del evento, objetivos, etc."
+        <textarea name="descripcion" id="descripcion-evento"
+            placeholder="Planificación del evento, objetivos, etc."
+            className="border border-emerald-800"
             onChange={(e)=>{handleFormularioCambio(e.currentTarget.name, e.currentTarget.value)}}
         ></textarea>
         <label htmlFor="tipo-evento">Tipo</label>
         <select
+            required
             id="tipo-evento"
-            name="opcion"
+            name="tipo"
+            className="border border-emerald-800"
             onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}>
                     <option value="conference" className="text-neutral-900">Conferencia</option>
                     <option value="workshop" className="text-neutral-900">Taller</option>
@@ -75,13 +89,18 @@ export default function EventForm( {eventos, setEventos} : EventFormProps) {
         </select>
         <label htmlFor="fecha-evento">Fecha</label>
         <input
+            required
             id="fecha-evento"
             name ="fecha"
             type="date" 
             placeholder="mm-dd-aaaa"
             onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}/>
 
-        <button type="submit">Registrar</button>
+        <button type="submit" className="
+                    bg-emerald-900 px-3 py-2 rounded self-center
+                "
+            >Registrar</button>
         </form>
+        </div>
     )
 }
