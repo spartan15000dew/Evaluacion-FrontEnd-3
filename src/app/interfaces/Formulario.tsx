@@ -1,8 +1,8 @@
 export interface Formulario{
     nombre : string,
-    rut : number,
-    opcion : string,
+    participantes : number,
     descripcion : string,
+    tipo : string,
     fecha : string,
     id: number
 }

@@ -11,8 +11,8 @@ interface EventFormProps {
 export default function EventForm( {eventos, setEventos} : EventFormProps) {
     let valoresPorDefecto = {
         nombre : "",
-        rut : 0,
-        opcion : "",
+        participantes : 0,
+        tipo : "",
         descripcion : "",
         fecha : "",
         id: 0
@@ -23,7 +23,7 @@ export default function EventForm( {eventos, setEventos} : EventFormProps) {
 
     const handleFormularioCambio = (name:string, value:string) => {
         setFormulario(
-        {...formulario, [name]: name === "rut" ? Number(value) : value }
+        {...formulario, [name]: name === "participantes-num" ? Number(value) : value }
         )
     }
 
@@ -48,29 +48,21 @@ export default function EventForm( {eventos, setEventos} : EventFormProps) {
             id="nombre-evento"
             name ="nombre"
             type="text" 
-            placeholder="Nombre"
+            placeholder="ej. Taller de tejido"
             onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}/>
 
         <label htmlFor="participantes-num">Número de participantes</label>
         <input
             id="participantes-num"
-            name ="rut"
+            name ="participantes"
             type="number" 
-            placeholder="Rut"
+            placeholder="ej. 50"
             onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}/>
 
         <label htmlFor="descripcion-evento">Descripción</label>
-        <textarea name="descripcion" id="descripcion-evento" placeholder="Descripción"
+        <textarea name="descripcion" id="descripcion-evento" placeholder="Planificación del evento, objetivos, etc."
             onChange={(e)=>{handleFormularioCambio(e.currentTarget.name, e.currentTarget.value)}}
         ></textarea>
-        <label htmlFor="fecha-evento">Fecha</label>
-        <input
-            id="fecha-evento"
-            name ="fecha"
-            type="date" 
-            placeholder="mm-dd-aaaa"
-            onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}/>
-
         <label htmlFor="tipo-evento">Tipo</label>
         <select
             id="tipo-evento"
@@ -81,6 +73,13 @@ export default function EventForm( {eventos, setEventos} : EventFormProps) {
                     <option value="party" className="text-neutral-900">Fiesta</option>
                     <option value="meeting" className="text-neutral-900">Reunión</option>
         </select>
+        <label htmlFor="fecha-evento">Fecha</label>
+        <input
+            id="fecha-evento"
+            name ="fecha"
+            type="date" 
+            placeholder="mm-dd-aaaa"
+            onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}/>
 
         <button type="submit">Registrar</button>
         </form>
