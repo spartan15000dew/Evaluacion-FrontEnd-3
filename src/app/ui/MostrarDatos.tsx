@@ -25,9 +25,9 @@ export const MostrarDatos = ({ eventos, setEventos } : Props) => {
   
   let elementosEventos = eventos.map((evento, i) =>
     <tr key={i}>
-      <td><input type="text" value={evento.nombre} onChange={(e) => handleChange(evento.id, e)}/></td>
-      <td><input type="number" value={evento.participantes} onChange={(e) => handleChange(evento.id, e)}/></td>
-      <td><input type="text" value={evento.descripcion} onChange={(e) => handleChange(evento.id, e)}/></td>
+      <td><input name="nombre" type="text" value={evento.nombre} onChange={(e) => handleChange(evento.id, e)}/></td>
+      <td><input name="participantes" type="number" value={evento.participantes} onChange={(e) => handleChange(evento.id, e)}/></td>
+      <td><input name="descripcion" type="text" value={evento.descripcion} onChange={(e) => handleChange(evento.id, e)}/></td>
       <td>
         <select name="tipo" value={evento.tipo} onChange={(e) => handleChange(evento.id, e)}>
         <option value="conference" className="text-neutral-900">Conferencia</option>
@@ -36,9 +36,9 @@ export const MostrarDatos = ({ eventos, setEventos } : Props) => {
         <option value="meeting" className="text-neutral-900">Reunión</option>
         </select>
       </td>
-      <td><input type="date" value={evento.fecha} onChange={(e) => handleChange(evento.id, e)}/></td>
-      <td><button className="bg-red-500 rounded px-3 py-2"
-        onClick={() => eliminarDeLaLista(evento.id)}
+      <td><input name="fecha" type="date" value={evento.fecha} onChange={(e) => handleChange(evento.id, e)}/></td>
+      <td><button onClick={() => eliminarDeLaLista(evento.id)}
+        className="bg-red-500 rounded-md px-3 py-2"
       >Borrar</button></td>
     </tr>
   )
@@ -48,13 +48,12 @@ export const MostrarDatos = ({ eventos, setEventos } : Props) => {
     <>
       <table className="w-[90%] mx-auto">
         <thead>
-          <tr className="gap-x-4">
+          <tr>
             <td>Nombre de evento</td>
             <td>Número de participantes</td>
             <td>Descripción del evento</td>
             <td>Tipo de evento</td>
             <td>Fecha del evento</td>
-            <td></td>
           </tr>
         </thead>
         <tbody>

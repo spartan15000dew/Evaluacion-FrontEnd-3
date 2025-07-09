@@ -46,23 +46,23 @@ export default function EventForm( {eventos, setEventos} : EventFormProps) {
             "
             onSubmit={handleRegistrar}
         >
-        <h1 className="self-center">Agendar evento</h1>
+        <h1 className="self-center">Agenda de eventos</h1>
         <label htmlFor="nombre-evento">Nombre del evento</label>
         <input
+            className="border border-emerald-800"
             required
             id="nombre-evento"
             name ="nombre"
             type="text" 
             placeholder="ej. Taller de tejido"
-            className="border border-emerald-800"
             onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}
         />
         <label htmlFor="participantes-num">Número de participantes</label>
         <input
+            className="border border-emerald-800"
             required
             min={1}
             max={20000}
-            className="border border-emerald-800"
             id="participantes-num"
             name ="participantes"
             type="number" 
@@ -70,9 +70,8 @@ export default function EventForm( {eventos, setEventos} : EventFormProps) {
             onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}
         />
         <label htmlFor="descripcion-evento">Descripción</label>
-        <textarea name="descripcion" id="descripcion-evento"
+        <textarea name="descripcion" id="descripcion-evento" className="border border-emerald-800"
             placeholder="Planificación del evento, objetivos, etc."
-            className="border border-emerald-800"
             onChange={(e)=>{handleFormularioCambio(e.currentTarget.name, e.currentTarget.value)}}
         ></textarea>
         <label htmlFor="tipo-evento">Tipo</label>
@@ -80,7 +79,6 @@ export default function EventForm( {eventos, setEventos} : EventFormProps) {
             required
             id="tipo-evento"
             name="tipo"
-            className="border border-emerald-800"
             onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}>
                     <option value="conference" className="text-neutral-900">Conferencia</option>
                     <option value="workshop" className="text-neutral-900">Taller</option>
