@@ -4,5 +4,5 @@ export interface Formulario{
     descripcion : string,
     tipo : string,
     fecha : string,
-    id: number
+    id: string
 }

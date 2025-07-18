@@ -8,13 +8,13 @@ interface Props{
 
 export const MostrarDatos = ({ eventos, setEventos } : Props) => {
 
-  function eliminarDeLaLista(eventoId: number) {
+  function eliminarDeLaLista(eventoId: string) {
     setEventos(prevEventos =>
       prevEventos.filter(evento => evento.id !== eventoId)
     )
   }
 
-  function handleChange(id: number, evento: ChangeEvent<HTMLInputElement|HTMLSelectElement>) {
+  function handleChange(id: string, evento: ChangeEvent<HTMLInputElement|HTMLSelectElement>) {
     const nombreCampo = evento.target.name
     const valor = evento.target.type === 'number' ? parseInt(evento.target.value) : evento.target.value
     const eventosActualizados = eventos.map(evento =>

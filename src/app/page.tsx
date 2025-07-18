@@ -4,17 +4,27 @@ import { Formulario } from "./interfaces/Formulario";
 import { useEffect, useState } from "react";
 import MostrarDatos from "./ui/MostrarDatos";
 import EventForm from "./ui/eventForm";
+import { obtenerFormularios } from "./lib/AccionesFormulario";
 
 export default function Home() {
   const [eventos, setEventos] = useState<Formulario[]>([])
   
+  //useEffect(()=>{
+  //  let listado = JSON.parse(localStorage.getItem("formulario") || "[]")
+  //  setEventos(listado);
+  //  if (!localStorage.getItem("contador")) {
+  //    localStorage.setItem("contador", "0");
+  //  }
+  //},[])
+
   useEffect(()=>{
-    let listado = JSON.parse(localStorage.getItem("formulario") || "[]")
-    setEventos(listado);
-    if (!localStorage.getItem("contador")) {
-      localStorage.setItem("contador", "0");
-    }
-  },[])
+    obtenerFormularios().then((listado)=>{
+              setEventos(listado)
+            }).catch((e)=>{
+              alert("hubo un error")
+            })
+  },[]) 
+
 
   useEffect(() => {
     localStorage.setItem("formulario", JSON.stringify(eventos))
