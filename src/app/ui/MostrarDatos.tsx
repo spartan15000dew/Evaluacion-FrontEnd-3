@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react"
-import { Formulario } from "../interfaces/Formulario"
-import { eliminarRegistro } from "../lib/AccionesFormulario"
+import { Formulario, NuevoRegistro } from "../interfaces/Formulario"
+import { actualizarFormulario, eliminarRegistro } from "../lib/AccionesFormulario"
+import { Timestamp } from "firebase/firestore"
 
 interface Props{
   eventos: Formulario[]
@@ -16,13 +17,16 @@ export const MostrarDatos = ({ eventos, setEventos } : Props) => {
     )
   }
 
-  function handleChange(id: string, evento: ChangeEvent<HTMLInputElement|HTMLSelectElement>) {
+  async function handleChange(id: string, evento: ChangeEvent<HTMLInputElement|HTMLSelectElement>) {
     const nombreCampo = evento.target.name
     const valor = evento.target.type === 'number' ? parseInt(evento.target.value) : evento.target.value
-    const eventosActualizados = eventos.map(evento =>
+    let eventosActualizados = eventos.map(evento =>
       evento.id === id ? { ...evento, [nombreCampo]: valor } : evento
     )
     setEventos(eventosActualizados)
+
+    let eventoTarget = eventosActualizados.find(evento => evento.id === id)
+    if (eventoTarget) await actualizarFormulario(id, eventoTarget)
   }
   
   let elementosEventos = eventos.map((evento, i) =>

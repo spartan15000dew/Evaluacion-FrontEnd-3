@@ -1,6 +1,6 @@
-import { addDoc, collection, deleteDoc, doc, getDocs, Timestamp } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, Timestamp, updateDoc } from "firebase/firestore";
 import { db } from "./Conexion";
-import { Formulario, NuevoRegistro } from "../interfaces/Formulario";
+import { defaultNuevoRegistro, Formulario, NuevoRegistro } from "../interfaces/Formulario";
 
 export async function obtenerFormularios() {
     const querySnapshot = await getDocs(collection(db, "Formularios"));
@@ -36,5 +36,20 @@ export async function eliminarRegistro(id:string) {
     await deleteDoc(doc(db, "Formularios", id))
   } catch (error) {
     console.error("Error al eliminar: ", error)
+  }
+}
+
+export async function actualizarFormulario(id:string, evento:Formulario) {
+  try {
+    const { fecha: fechaStr, ...rest } = evento
+    let registroActualizado = {
+      ...defaultNuevoRegistro,
+      ...rest,
+      fecha: Timestamp.fromDate(new Date(fechaStr))
+    }
+    const docRef = doc(db, "Formularios", id)
+    await updateDoc(docRef, registroActualizado)
+  } catch (error) {
+    
   }
 }

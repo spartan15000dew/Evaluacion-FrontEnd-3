@@ -16,3 +16,11 @@ export interface NuevoRegistro {
     tipo: string,
     fecha: Timestamp
 }
+
+export const defaultNuevoRegistro: NuevoRegistro = {
+  nombre: "",
+  participantes: 0,
+  descripcion: "",
+  tipo: "",
+  fecha: Timestamp.now()
+}
