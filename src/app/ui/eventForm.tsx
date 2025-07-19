@@ -1,7 +1,9 @@
 'use client'
 
 import { useState, FormEvent } from "react"
-import { Formulario } from "../interfaces/Formulario"
+import { Formulario, NuevoRegistro } from "../interfaces/Formulario"
+import { registrarFormulario } from "../lib/AccionesFormulario"
+import { Timestamp } from "firebase/firestore"
 
 interface EventFormProps {
     eventos: Formulario[]
@@ -14,12 +16,10 @@ export default function EventForm( {eventos, setEventos} : EventFormProps) {
         participantes : 0,
         tipo : "",
         descripcion : "",
-        fecha : "",
-        id: 0
+        fecha : Timestamp.fromDate(new Date())
     }
 
-    const [formulario, setFormulario] = useState<Formulario>(valoresPorDefecto)
-
+    const [formulario, setFormulario] = useState<NuevoRegistro>(valoresPorDefecto)
 
     const handleFormularioCambio = (name:string, value:string) => {
         setFormulario(
@@ -27,15 +27,15 @@ export default function EventForm( {eventos, setEventos} : EventFormProps) {
         )
     }
 
-    const handleRegistrar = (e: FormEvent)=> {
-        e.preventDefault();
-        const contador = parseInt(localStorage.getItem("contador") || "0");
-        const nuevoEvento = { ...formulario, id: contador };
-        localStorage.setItem("contador", (contador + 1).toString());
-        const nuevosRegistros = [...eventos, nuevoEvento];
+    const handleCambioFecha = (name:string, value:string) => {
+        setFormulario(
+            {...formulario, [name]: Timestamp.fromDate(new Date(value))}
+        )
+    }
 
-        setEventos(nuevosRegistros)
-        localStorage.setItem("formulario", JSON.stringify(nuevosRegistros))
+    async function handleRegistrar(e: FormEvent) {
+        e.preventDefault();
+        setEventos([...eventos, await registrarFormulario({...formulario})])
     }
 
     return (
@@ -92,7 +92,7 @@ export default function EventForm( {eventos, setEventos} : EventFormProps) {
             name ="fecha"
             type="date" 
             placeholder="mm-dd-aaaa"
-            onChange={(e)=>{handleFormularioCambio(e.currentTarget.name,e.currentTarget.value)}}/>
+            onChange={(e)=>{handleCambioFecha(e.currentTarget.name,e.currentTarget.value)}}/>
 
         <button type="submit" className="
                     bg-emerald-900 px-3 py-2 rounded self-center

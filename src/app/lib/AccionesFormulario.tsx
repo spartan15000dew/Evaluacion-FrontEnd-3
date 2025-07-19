@@ -1,13 +1,6 @@
 import { addDoc, collection, getDocs, Timestamp } from "firebase/firestore";
 import { db } from "./Conexion";
-import { Formulario } from "../interfaces/Formulario";
-
-
-
-export async function registrarFormulario(formulario:Formulario) {
-    const docRef = await addDoc(collection(db, "Formularios"), formulario);
-    console.log("Document written with ID: ", docRef.id)
-  }
+import { Formulario, NuevoRegistro } from "../interfaces/Formulario";
 
 export async function obtenerFormularios() {
     const querySnapshot = await getDocs(collection(db, "Formularios"));
@@ -31,4 +24,9 @@ function timestampToInputDate(timestamp: Timestamp): string {
     return timestamp.toDate()
                     .toISOString()
                     .split("T")[0]
+}
+
+export async function registrarFormulario(evento:NuevoRegistro): Promise<Formulario> {
+    const docRef = await addDoc(collection(db, "Formularios"), evento)
+    return {...evento, id: docRef.id, fecha: timestampToInputDate(evento.fecha)}
 }

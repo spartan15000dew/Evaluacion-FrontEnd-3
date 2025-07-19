@@ -21,7 +21,7 @@ export default function Home() {
     obtenerFormularios().then((listado)=>{
               setEventos(listado)
             }).catch((e)=>{
-              alert("hubo un error")
+              alert(e)
             })
   },[]) 
 
