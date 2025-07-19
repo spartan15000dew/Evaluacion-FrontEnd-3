@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, Timestamp } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, Timestamp } from "firebase/firestore";
 import { db } from "./Conexion";
 import { Formulario, NuevoRegistro } from "../interfaces/Formulario";
 
@@ -12,7 +12,7 @@ export async function obtenerFormularios() {
         descripcion : doc.data().descripcion,
         tipo : doc.data().tipo,
         fecha : timestampToInputDate(doc.data().fecha),
-        id : doc.data().id
+        id : doc.id
       }
       listado.push(Formulario)
       console.log(doc.id, " => ", doc.data())
@@ -29,4 +29,12 @@ function timestampToInputDate(timestamp: Timestamp): string {
 export async function registrarFormulario(evento:NuevoRegistro): Promise<Formulario> {
     const docRef = await addDoc(collection(db, "Formularios"), evento)
     return {...evento, id: docRef.id, fecha: timestampToInputDate(evento.fecha)}
+}
+
+export async function eliminarRegistro(id:string) {
+  try {
+    await deleteDoc(doc(db, "Formularios", id))
+  } catch (error) {
+    console.error("Error al eliminar: ", error)
+  }
 }

@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react"
 import { Formulario } from "../interfaces/Formulario"
+import { eliminarRegistro } from "../lib/AccionesFormulario"
 
 interface Props{
   eventos: Formulario[]
@@ -8,7 +9,8 @@ interface Props{
 
 export const MostrarDatos = ({ eventos, setEventos } : Props) => {
 
-  function eliminarDeLaLista(eventoId: string) {
+  async function eliminarDeLaLista(eventoId: string) {
+    await eliminarRegistro(eventoId);
     setEventos(prevEventos =>
       prevEventos.filter(evento => evento.id !== eventoId)
     )
